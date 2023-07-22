@@ -76,7 +76,6 @@ function _initDead() {
 
       <br />
       <br />
-      (or if a game is playing right now and you don't see it, tell alexcks)
     </div>
     <div
       id="date"
