@@ -291,13 +291,14 @@ async function updateDates(date) {
         for (let i = 0; i < 4; i++) {
             let month = date.getMonth();
             let d = date.getDate() + i;
-            if(d >= 32)d = (d%32)+1
+            if(d >= 32)d = (d%32)+1, month+=1;
 
-            let response = await fetch(`https://api.foxsports.com/bifrost/v1/soccer/league/scores-segment/c14d20230${month + 1}${(d < 10 ? "0" + d : d)%32}?groupId=14&apikey=jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq`);
-            if (response.status !== 200) return;
-            let data = await response.json();
-            if (!data.sectionList.length) return resolve(dates);
-            dates.items.push(filterItem(data.sectionList[0]));
+            let response = await fetch(`https://api.foxsports.com/bifrost/v1/soccer/league/scores-segment/c14d20230${month + 1}${(d < 10 ? "0" + d : d)}?groupId=14&apikey=jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq`);
+            if (response.status === 200){
+                let data = await response.json();
+                if (data?.sectionList.length) dates.items.push(filterItem(data.sectionList[0]));
+                else return resolve(dates);
+            }
         }
 
         resolve(dates);
