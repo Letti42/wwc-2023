@@ -292,7 +292,7 @@ async function updateDates(date) {
             let month = date.getMonth();
             let d = date.getDate() + i;
 
-            let response = await fetch(`https://api.foxsports.com/bifrost/v1/soccer/league/scores-segment/c14d20230${month + 1}${d < 10 ? "0" + d : d}?groupId=14&apikey=jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq`);
+            let response = await fetch(`https://api.foxsports.com/bifrost/v1/soccer/league/scores-segment/c14d20230${month + 1}${(d < 10 ? "0" + d : d)%32}?groupId=14&apikey=jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq`);
             if (response.status !== 200) return;
             let data = await response.json();
             if (!data.sectionList.length) return resolve(dates);
